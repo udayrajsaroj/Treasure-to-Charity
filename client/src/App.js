@@ -7,7 +7,7 @@ import DashboardLayout from './components/DashboardLayout';
 // --- Auth & Core Pages ---
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import Dashboard from './pages/Dashboard'; // ✅ Yahi Main Dashboard sab use karenge
+import Dashboard from './pages/Dashboard'; 
 
 // --- Donor Features ---
 import AddProduct from './pages/AddProduct';
@@ -23,8 +23,6 @@ import AdminTransactions from './pages/AdminTransactions';
 import AddDeliveryPartner from './pages/AddDeliveryPartner';
 // ✅ Warehouse Verification (Isse mat udana)
 import InventoryVerification from './pages/InventoryVerification'; 
-
-// ❌ Removed: DeliveryDashboard (Kyunki ab Delivery Boy 'Dashboard' page hi use karega)
 
 // --- Consumer Features (Orphanage/Buyer) ---
 import BrowseItems from './pages/BrowseItems';
