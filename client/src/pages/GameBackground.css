@@ -2,50 +2,6 @@
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: linear-gradient(-45deg, #00b4db, #23a6d5, #e73c7e, #ee7752);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    overflow: hidden;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     z-index: -1;
-    will-change: background-position; /* ✅ GPU acceleration */
-}
-
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-.grid-floor {
-    position: absolute;
-    bottom: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background-image: 
-        linear-gradient(0deg, transparent 24%, rgba(255,255,255,0.15) 25%, rgba(255,255,255,0.15) 26%, transparent 27%),
-        linear-gradient(90deg, transparent 24%, rgba(255,255,255,0.15) 25%, rgba(255,255,255,0.15) 26%, transparent 27%);
-    background-size: 60px 60px;
-    transform: rotateX(60deg);
-    animation: moveGrid 6s linear infinite; /* 4s → 6s slow kiya */
-    opacity: 0.3; /* 0.4 → 0.3 */
-    will-change: background-position; /* ✅ GPU acceleration */
-}
-
-@keyframes moveGrid {
-    0% { background-position: 0 0; }
-    100% { background-position: 0 60px; }
-}
-
-.game-item {
-    position: absolute;
-    top: -100px;
-    font-size: 3rem; /* 5rem → 3rem */
-    filter: drop-shadow(0 0 8px rgba(255,255,255,0.6)); /* light shadow */
-    animation: collectItem 7s linear infinite;
-    will-change: transform; /* ✅ GPU acceleration */
-}
-
-@keyframes collectItem {
-    0% { transform: translateY(0) scale(0.6) rotate(0deg); opacity: 0; }
-    20% { opacity: 1; }
-    100% { transform: translateY(120vh) scale(1.2) rotate(15deg); opacity: 0; }
 }
