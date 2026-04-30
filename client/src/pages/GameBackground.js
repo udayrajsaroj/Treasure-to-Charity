@@ -1,36 +1,33 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import './GameBackground.css';
 
+const items = ['🎁', '👕', '📦', '🍎', '🧸', '💖'];
+
 const GameBackground = () => {
-    const items = ['🎁', '👕', '📦', '🍎', '🧸', '💖'];
-    
+    const gameItems = useMemo(() => 
+        [...Array(8)].map((_, i) => ({  // 12 → 8
+            id: i,
+            left: `${(i * 11) % 90}%`,  // Math.random() hataya
+            delay: `${(i * 1.1) % 8}s`,
+            duration: `${6 + (i % 4)}s`
+        })), []  // sirf ek baar calculate hoga
+    );
+
     return (
         <div className="game-container">
             <div className="grid-floor"></div>
-
-            {[...Array(12)].map((_, i) => (
-                <div 
-                    key={i} 
+            {gameItems.map((item) => (
+                <div
+                    key={item.id}
                     className="game-item"
                     style={{
-                        left: `${Math.random() * 90}%`,
-                        animationDelay: `${Math.random() * 8}s`,
-                        animationDuration: `${Math.random() * 4 + 4}s`
+                        left: item.left,
+                        animationDelay: item.delay,
+                        animationDuration: item.duration
                     }}
                 >
-                    {items[i % items.length]}
+                    {items[item.id % items.length]}
                 </div>
-            ))}
-
-            {[...Array(5)].map((_, i) => (
-                <div 
-                    key={`l-${i}`}
-                    className="circuit-line"
-                    style={{
-                        top: `${20 * i}%`,
-                        animationDelay: `${i * 1.5}s`
-                    }}
-                ></div>
             ))}
         </div>
     );
