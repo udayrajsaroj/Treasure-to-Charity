@@ -98,7 +98,7 @@ const DashboardLayout = ({ children }) => {
                 zIndex: 1001,
             }}>
                 <div style={styles.sidebarHeader}>
-                    <div style={styles.brand}>🎁 T2C</div>  
+                    <div style={styles.brand}>🎁 Treasure to Charity</div>  
                     {isMobile && (
                         <button onClick={() => setIsMenuOpen(false)} style={styles.closeBtn}>✕</button>
                     )}
