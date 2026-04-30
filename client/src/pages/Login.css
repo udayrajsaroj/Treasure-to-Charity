@@ -1,0 +1,46 @@
+
+#login-unique-portal .auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent !important; 
+    position: relative;
+    z-index: 10;
+    padding: 20px;
+}
+
+#login-unique-portal .glass-card {
+    width: 100%;
+    max-width: 520px; 
+    padding: 50px 45px; 
+    background: rgba(255, 255, 255, 0.2) !important; 
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+#login-unique-portal input {
+    padding: 15px !important;
+    font-size: 16px !important;
+    border-radius: 12px !important;
+    margin-top: 8px !important;
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+#login-unique-portal button {
+    padding: 16px !important;
+    font-size: 18px !important;
+    border-radius: 12px !important;
+    margin-top: 20px !important;
+    width: 100%;
+    cursor: pointer;
+    background: #6f42c1;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+}
