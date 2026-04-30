@@ -7,7 +7,7 @@ const app = express();
 
 // 1. FIXED CORS - Sabhi Cloudflare URLs ke liye
 app.use(cors({
-    origin: ["http://localhost:3000", "http://127.0.0.1:3000", "https://treasure-to-charity.vercel.app/"], // Frontend ka address
+    origin: ["http://localhost:3000", "http://127.0.0.1:3000", "https://treasure-to-charity.vercel.app"], // Frontend ka address
     methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization", "bypass-tunnel-reminder"]
