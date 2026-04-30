@@ -1,17 +1,7 @@
-const nodemailer = require('nodemailer');
+const axios = require('axios');
 
 const sendEmail = async (userEmail, details) => {
     try {
-        const transporter = nodemailer.createTransport({
-            host: 'smtp-relay.brevo.com',  // ✅ sirf yahi ek host
-            port: 587,
-            secure: false,
-            auth: {
-                user: process.env.BREVO_USER,
-                pass: process.env.BREVO_PASS
-            }
-        });
-
         const htmlTemplate = details.message 
             ? `
                 <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 30px; border: 1px solid #e0e0e0; border-radius: 12px; max-width: 600px; margin: auto;">
@@ -40,21 +30,27 @@ const sendEmail = async (userEmail, details) => {
                 </div>
             `;
 
-        const mailOptions = {
-            from: `"Treasure to Charity" <${process.env.BREVO_USER}>`,
-            to: userEmail,
-            subject: details.subject || 'Official Notification - Treasure to Charity',
-            html: htmlTemplate
-        };
+        const response = await axios.post(
+            'https://api.brevo.com/v3/smtp/email',
+            {
+                sender: { name: "Treasure to Charity", email: "udayrajsaroj55@gmail.com" },
+                to: [{ email: userEmail }],
+                subject: details.subject || 'Official Notification - Treasure to Charity',
+                htmlContent: htmlTemplate
+            },
+            {
+                headers: {
+                    'api-key': process.env.BREVO_API_KEY,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
 
-        const info = await transporter.sendMail(mailOptions);
-        console.log("✅ Email sent successfully: %s", info.messageId);
-        return info;
+        console.log("✅ Email sent successfully:", response.data.messageId);
+        return response.data;
 
     } catch (error) {
-        console.error("❌ NODEMAILER ERROR details:");
-        console.error("Error Message:", error.message);
-        console.error("Email User used:", process.env.BREVO_USER); // ✅ fix
+        console.error("❌ EMAIL ERROR:", error.response?.data || error.message);
         throw new Error("Email sending failed: " + error.message);
     }
 };
