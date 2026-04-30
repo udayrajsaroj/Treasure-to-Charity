@@ -80,21 +80,32 @@ const DashboardLayout = ({ children }) => {
 
     return (
         <div style={styles.wrapper}>
+
+            {/* Mobile Overlay */}
+            {isMobile && isMenuOpen && (
+                <div 
+                    onClick={() => setIsMenuOpen(false)}
+                    style={styles.overlay}
+                />
+            )}
+
             <aside style={{
                 ...styles.sidebar,
-                display: isMobile && !isMenuOpen ? 'none' : 'flex',
+                transform: isMobile ? (isMenuOpen ? 'translateX(0)' : 'translateX(-100%)') : 'translateX(0)',
                 position: isMobile ? 'fixed' : 'relative',
-                zIndex: 1000,
-                height: '100vh',
-                width: isMobile ? '100%' : '260px'
+                width: isMobile ? '75%' : '260px',  // ✅ mobile pe 75% width
+                maxWidth: '280px',
+                zIndex: 1001,
             }}>
                 <div style={styles.sidebarHeader}>
-                    <div style={styles.brand}>TREASURE TO CHARITY</div>
-                    {isMobile && <button onClick={() => setIsMenuOpen(false)} style={styles.closeBtn}>✕</button>}
+                    <div style={styles.brand}>🎁 T2C</div>  
+                    {isMobile && (
+                        <button onClick={() => setIsMenuOpen(false)} style={styles.closeBtn}>✕</button>
+                    )}
                 </div>
                 
                 <div style={styles.userBox}>
-                    <strong style={{fontSize: '14px', display: 'block'}}>{userName}</strong>
+                    <strong style={{fontSize: '13px', display: 'block'}}>{userName}</strong>
                     <small style={{color: '#6f42c1', fontWeight: 'bold'}}>{userRole}</small>
                 </div>
                 
@@ -113,20 +124,31 @@ const DashboardLayout = ({ children }) => {
                         </button>
                     ))}
                 </nav>
+
+                <button onClick={handleLogout} style={styles.logoutSidebar}>
+                    Logout ➡️
+                </button>
             </aside>
 
             <main style={styles.main}>
                 <header style={styles.topBar}>
-                    <div style={{display: 'flex', alignItems: 'center', gap: '15px'}}>
-                        {isMobile && <button onClick={() => setIsMenuOpen(true)} style={styles.menuBtn}>☰</button>}
+                    <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+                        {isMobile && (
+                            <button onClick={() => setIsMenuOpen(true)} style={styles.menuBtn}>☰</button>
+                        )}
                         <span style={styles.pageTitle}>
-                            {location.pathname === '/dashboard' ? '📊 OVERVIEW' : location.pathname.replace('/', '').toUpperCase().replace('-', ' ')}
+                            {location.pathname === '/dashboard' 
+                                ? '📊 Overview' 
+                                : location.pathname.replace('/', '').replace(/-/g, ' ').toUpperCase()
+                            }
                         </span>
                     </div>
                     
-                    <button onClick={handleLogout} style={styles.logoutBtnTop}>
-                        {isMobile ? '➡️' : 'Logout ➡️'}
-                    </button>
+                    {!isMobile && (
+                        <button onClick={handleLogout} style={styles.logoutBtnTop}>
+                            Logout ➡️
+                        </button>
+                    )}
                 </header>
                 <div style={styles.content}>{children}</div>
             </main>
@@ -135,20 +157,128 @@ const DashboardLayout = ({ children }) => {
 };
 
 const styles = {
-    wrapper: { display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden', backgroundColor: '#f4f7f6' },
-    sidebar: { width: '260px', background: '#fff', borderRight: '1px solid #ddd', flexDirection: 'column', padding: '20px', transition: '0.3s' },
-    sidebarHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', padding: '0 5px' },
-    brand: { fontSize: '18px', fontWeight: 'bold', color: '#6f42c1', letterSpacing: '0.5px' },
-    closeBtn: { background: 'none', border: 'none', fontSize: '28px', cursor: 'pointer', color: '#666', padding: '5px' },
-    userBox: { padding: '15px', background: '#f8f9ff', borderRadius: '10px', marginBottom: '25px', textAlign: 'center' },
-    nav: { flex: 1, display: 'flex', flexDirection: 'column', gap: '8px', overflowY: 'auto' },
-    navLink: { border: 'none', padding: '12px 15px', textAlign: 'left', borderRadius: '8px', cursor: 'pointer', fontSize: '13px', fontWeight: '500', transition: '0.2s' },
-    main: { flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' },
-    topBar: { minHeight: '65px', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 20px', borderBottom: '1px solid #eee' },
-    menuBtn: { background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer' },
-    pageTitle: { fontWeight: 'bold', color: '#555', fontSize: '12px' },
-    content: { padding: '15px', flex: 1, overflowY: 'auto' },
-    logoutBtnTop: { padding: '8px 15px', backgroundColor: '#dc3545', color: '#fff', border: 'none', borderRadius: '6px', cursor: 'pointer', fontSize: '13px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '5px' }
+    wrapper: { 
+        display: 'flex', 
+        height: '100vh', 
+        width: '100vw', 
+        overflow: 'hidden', 
+        backgroundColor: '#f4f7f6' 
+    },
+    overlay: {
+        position: 'fixed',
+        top: 0, left: 0,
+        width: '100%', height: '100%',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        zIndex: 1000,
+    },
+    sidebar: { 
+        background: '#fff', 
+        borderRight: '1px solid #ddd', 
+        display: 'flex',
+        flexDirection: 'column', 
+        padding: '20px',
+        height: '100vh',
+        transition: 'transform 0.3s ease',
+        overflowY: 'auto',
+    },
+    sidebarHeader: { 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        marginBottom: '20px',
+    },
+    brand: { 
+        fontSize: '20px', 
+        fontWeight: 'bold', 
+        color: '#6f42c1',
+    },
+    closeBtn: { 
+        background: 'none', 
+        border: 'none', 
+        fontSize: '24px', 
+        cursor: 'pointer', 
+        color: '#666',
+    },
+    userBox: { 
+        padding: '12px', 
+        background: '#f8f9ff', 
+        borderRadius: '10px', 
+        marginBottom: '20px', 
+        textAlign: 'center' 
+    },
+    nav: { 
+        flex: 1, 
+        display: 'flex', 
+        flexDirection: 'column', 
+        gap: '6px', 
+        overflowY: 'auto' 
+    },
+    navLink: { 
+        border: 'none', 
+        padding: '11px 12px', 
+        textAlign: 'left', 
+        borderRadius: '8px', 
+        cursor: 'pointer', 
+        fontSize: '13px', 
+        fontWeight: '500', 
+        transition: '0.2s',
+        whiteSpace: 'nowrap',
+    },
+    main: { 
+        flex: 1, 
+        display: 'flex', 
+        flexDirection: 'column', 
+        overflow: 'hidden',
+        minWidth: 0,
+    },
+    topBar: { 
+        minHeight: '60px', 
+        background: '#fff', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'space-between', 
+        padding: '0 15px', 
+        borderBottom: '1px solid #eee',
+    },
+    menuBtn: { 
+        background: 'none', 
+        border: 'none', 
+        fontSize: '26px', 
+        cursor: 'pointer',
+        color: '#6f42c1',
+        fontWeight: 'bold',
+    },
+    pageTitle: { 
+        fontWeight: 'bold', 
+        color: '#555', 
+        fontSize: '13px',
+    },
+    content: { 
+        padding: '15px', 
+        flex: 1, 
+        overflowY: 'auto',
+    },
+    logoutBtnTop: { 
+        padding: '8px 15px', 
+        backgroundColor: '#dc3545', 
+        color: '#fff', 
+        border: 'none', 
+        borderRadius: '6px', 
+        cursor: 'pointer', 
+        fontSize: '13px', 
+        fontWeight: 'bold',
+    },
+    logoutSidebar: {
+        marginTop: '15px',
+        padding: '10px',
+        backgroundColor: '#dc3545',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '8px',
+        cursor: 'pointer',
+        fontWeight: 'bold',
+        fontSize: '13px',
+    }
 };
 
 export default DashboardLayout;
