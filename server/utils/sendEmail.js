@@ -47,7 +47,7 @@ const sendEmail = async (userEmail, details) => {
 
         // 3. Mail Options
         const mailOptions = {
-            from: `"Treasure to Charity" <${process.env.EMAIL_USER}>`,
+            from: `"Treasure to Charity" <${process.env.BREVO_USER}>`,
             to: userEmail,
             subject: details.subject || 'Official Notification - Treasure to Charity',
             html: htmlTemplate
