@@ -4,7 +4,7 @@ const sendEmail = async (userEmail, details) => {
     try {
         // 1. Transporter configuration
         const transporter = nodemailer.createTransport({
-            service: 'gmail',
+            host: 'smtp-relay.brevo.com', 
             host: 'smtp.gmail.com',
             port: 587,
             secure: false,
