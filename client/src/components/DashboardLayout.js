@@ -91,12 +91,15 @@ const DashboardLayout = ({ children }) => {
 
             <aside style={{
                 ...styles.sidebar,
-                transform: isMobile ? (isMenuOpen ? 'translateX(0)' : 'translateX(-100%)') : 'translateX(0)',
+                transform: isMobile 
+                    ? (isMenuOpen ? 'translateX(0)' : 'translateX(-100%)') 
+                    : 'translateX(0)',
                 position: isMobile ? 'fixed' : 'relative',
-                width: isMobile ? '75%' : '260px',  // ✅ mobile pe 75% width
+                width: isMobile ? '75%' : '260px',
                 maxWidth: '280px',
                 zIndex: 1001,
             }}>
+                {/* Header */}
                 <div style={styles.sidebarHeader}>
                     <div style={styles.brand}>🎁 Treasure to Charity</div>  
                     {isMobile && (
@@ -104,30 +107,37 @@ const DashboardLayout = ({ children }) => {
                     )}
                 </div>
                 
+                {/* User Box */}
                 <div style={styles.userBox}>
                     <strong style={{fontSize: '13px', display: 'block'}}>{userName}</strong>
                     <small style={{color: '#6f42c1', fontWeight: 'bold'}}>{userRole}</small>
                 </div>
                 
-                <nav style={styles.nav}>
-                    {currentMenu.map(item => (
-                        <button 
-                            key={item.path} 
-                            onClick={() => handleNavClick(item.path)}
-                            style={{
-                                ...styles.navLink,
-                                backgroundColor: location.pathname === item.path ? '#6f42c1' : 'transparent',
-                                color: location.pathname === item.path ? '#fff' : '#444'
-                            }}
-                        >
-                            {item.name}
-                        </button>
-                    ))}
-                </nav>
+                {/* Nav — scrollable */}
+                <div style={styles.navWrapper}>
+                    <nav style={styles.nav}>
+                        {currentMenu.map(item => (
+                            <button 
+                                key={item.path} 
+                                onClick={() => handleNavClick(item.path)}
+                                style={{
+                                    ...styles.navLink,
+                                    backgroundColor: location.pathname === item.path ? '#6f42c1' : 'transparent',
+                                    color: location.pathname === item.path ? '#fff' : '#444'
+                                }}
+                            >
+                                {item.name}
+                            </button>
+                        ))}
+                    </nav>
+                </div>
 
-                <button onClick={handleLogout} style={styles.logoutSidebar}>
-                    Logout ➡️
-                </button>
+                {/* Logout — always visible at bottom */}
+                <div style={styles.logoutWrapper}>
+                    <button onClick={handleLogout} style={styles.logoutSidebar}>
+                        🚪 Logout
+                    </button>
+                </div>
             </aside>
 
             <main style={styles.main}>
@@ -175,20 +185,22 @@ const styles = {
         background: '#fff', 
         borderRight: '1px solid #ddd', 
         display: 'flex',
-        flexDirection: 'column', 
+        flexDirection: 'column',   // ✅ column layout
         padding: '20px',
         height: '100vh',
         transition: 'transform 0.3s ease',
-        overflowY: 'hidden',
+        boxSizing: 'border-box',
+        overflow: 'hidden',        // ✅ sidebar itself hidden
     },
     sidebarHeader: { 
         display: 'flex', 
         justifyContent: 'space-between', 
         alignItems: 'center', 
         marginBottom: '20px',
+        flexShrink: 0,             // ✅ shrink nahi hoga
     },
     brand: { 
-        fontSize: '20px', 
+        fontSize: '16px', 
         fontWeight: 'bold', 
         color: '#6f42c1',
     },
@@ -198,20 +210,25 @@ const styles = {
         fontSize: '24px', 
         cursor: 'pointer', 
         color: '#666',
+        flexShrink: 0,
     },
     userBox: { 
         padding: '12px', 
         background: '#f8f9ff', 
         borderRadius: '10px', 
-        marginBottom: '20px', 
-        textAlign: 'center' 
+        marginBottom: '15px', 
+        textAlign: 'center',
+        flexShrink: 0,             // ✅ shrink nahi hoga
+    },
+    navWrapper: {
+        flex: 1,                   // ✅ baaki space le lo
+        overflowY: 'auto',         // ✅ sirf nav scroll hoga
+        marginBottom: '10px',
     },
     nav: { 
-        flex: 1, 
         display: 'flex', 
         flexDirection: 'column', 
-        gap: '6px', 
-        overflowY: 'auto' 
+        gap: '6px',
     },
     navLink: { 
         border: 'none', 
@@ -222,7 +239,23 @@ const styles = {
         fontSize: '13px', 
         fontWeight: '500', 
         transition: '0.2s',
-        whiteSpace: 'nowrap',
+        width: '100%',
+    },
+    logoutWrapper: {
+        flexShrink: 0,             // ✅ hamesha bottom pe rahega
+        paddingTop: '10px',
+        borderTop: '1px solid #eee',
+    },
+    logoutSidebar: {
+        width: '100%',
+        padding: '12px',
+        backgroundColor: '#dc3545',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '8px',
+        cursor: 'pointer',
+        fontWeight: 'bold',
+        fontSize: '13px',
     },
     main: { 
         flex: 1, 
@@ -239,6 +272,7 @@ const styles = {
         justifyContent: 'space-between', 
         padding: '0 15px', 
         borderBottom: '1px solid #eee',
+        flexShrink: 0,
     },
     menuBtn: { 
         background: 'none', 
@@ -268,18 +302,6 @@ const styles = {
         fontSize: '13px', 
         fontWeight: 'bold',
     },
-    logoutSidebar: {
-        marginTop: 'auto',
-        padding: '10px',
-        backgroundColor: '#dc3545',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '8px',
-        cursor: 'pointer',
-        fontWeight: 'bold',
-        fontSize: '13px',
-        flexShrink: 0, 
-    }
 };
 
 export default DashboardLayout;
