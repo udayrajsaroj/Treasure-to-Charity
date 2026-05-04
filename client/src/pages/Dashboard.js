@@ -287,8 +287,8 @@ const Dashboard = () => {
 
             {userRole === 'Orphanage' && (
                 <div style={styles.grid}>
-                    <div style={{...styles.card, borderTop: '4px solid #6f42c1', background:'#f8f9ff', minWidth:'400px'}}>
-                        <h1 style={{color: '#6f42c1', fontSize: '48px'}}>₹{consumerStats.fundsValue}</h1>
+                    <div style={{...styles.card, borderTop: '4px solid #6f42c1', background:'#f8f9ff'}}>
+                        <h2 style={{color: '#6f42c1', fontSize: '32px'}}>₹{consumerStats.fundsValue}</h2>
                         <p><strong>💰 Total Received Value</strong></p>
                         <small style={{color: '#888'}}>Combined verified donor and buyer side shares</small>
                     </div>
