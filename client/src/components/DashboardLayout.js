@@ -179,7 +179,7 @@ const styles = {
         padding: '20px',
         height: '100vh',
         transition: 'transform 0.3s ease',
-        overflowY: 'auto',
+        overflowY: 'hidden',
     },
     sidebarHeader: { 
         display: 'flex', 
@@ -269,7 +269,7 @@ const styles = {
         fontWeight: 'bold',
     },
     logoutSidebar: {
-        marginTop: '15px',
+        marginTop: 'auto',
         padding: '10px',
         backgroundColor: '#dc3545',
         color: '#fff',
@@ -278,6 +278,7 @@ const styles = {
         cursor: 'pointer',
         fontWeight: 'bold',
         fontSize: '13px',
+        flexShrink: 0, 
     }
 };
 
